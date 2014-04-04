@@ -147,10 +147,10 @@ Translations of the guide are available in the following languages:
   class FooError < StandardError
   end
 
-  # okish
+  # ontohub-standard case for error classes
   class FooError < StandardError; end
 
-  # good
+  # don't use this
   FooError = Class.new(StandardError)
   ```
 
@@ -410,24 +410,9 @@ Translations of the guide are available in the following languages:
                 ' and second part of the long string'
   ```
 
-* Adopt a consistent multi-line method chaining style. There are two
-  popular styles in the Ruby community, both of which are considered
-  good - leading `.` (Option A) and trailing `.` (Option B).
+* Adopt a consistent multi-line method chaining style.
 
-  * **(Option A)** When continuing a chained method invocation on
-    another line keep the `.` on the second line.
-
-    ```Ruby
-    # bad - need to consult first line to understand second line
-    one.two.three.
-      four
-
-    # good - it's immediately clear what's going on the second line
-    one.two.three
-      .four
-    ```
-
-  * **(Option B)** When continuing a chained method invocation on another line,
+  * When continuing a chained method invocation on another line,
     include the `.` on the first line to indicate that the
     expression continues.
 
@@ -708,7 +693,7 @@ Translations of the guide are available in the following languages:
   x = !something
   ```
 
-* Avoid the use of `!!`.
+* Avoid the use of `!!` in `if` or `unless` conditions.
 
   ```Ruby
   # bad
@@ -719,8 +704,15 @@ Translations of the guide are available in the following languages:
   end
 
   x = false
-  # double negation is useless on booleans
+  # double exclamation mark is useless on booleans
+  # unless you expect it to be nil
+  # -> this is bad
   !!x # => false
+
+  # ok
+  x = some_method # which may return a boolean or nil
+  !!x
+
 
   # good
   x = 'test'
@@ -766,7 +758,7 @@ Translations of the guide are available in the following languages:
   # good
   do_something if some_condition
 
-  # another good option
+  # really bad
   some_condition && do_something
   ```
 
@@ -777,13 +769,13 @@ Translations of the guide are available in the following languages:
   # bad
   do_something if !some_condition
 
-  # bad
+  # NEVER use this
   do_something if not some_condition
 
   # good
   do_something unless some_condition
 
-  # another good option
+  # really bad
   some_condition || do_something
   ```
 
@@ -803,6 +795,13 @@ Translations of the guide are available in the following languages:
   else
     puts 'failure'
   end
+  ```
+
+* Don't use `unless` with complex boolean expressions
+
+  ```Ruby
+  # bad
+  some_method unless success && some_thing_else
   ```
 
 * Don't use parentheses around the condition of an `if/unless/while/until`.
