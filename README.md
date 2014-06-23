@@ -370,8 +370,11 @@ Translations of the guide are available in the following languages:
   ```Ruby
   def some_method
     data = initialize(options)
-
+    data.param = value
     data.manipulate!
+
+    handler = Handler.new(data)
+    handler.perform
 
     data.result
   end
