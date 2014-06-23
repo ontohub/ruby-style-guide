@@ -1390,7 +1390,7 @@ Translations of the guide are available in the following languages:
   paths = [paths] unless paths.is_a? Array
   paths.each { |path| do_something(path) }
 
-  # good
+  # bad
   [*paths].each { |path| do_something(path) }
 
   # good (and a bit more readable)
