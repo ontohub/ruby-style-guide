@@ -1293,7 +1293,7 @@ Translations of the guide are available in the following languages:
 * Prefer `proc.call()` over `proc[]` or `proc.()` for both lambdas and procs.
 
   ```Ruby
-  # bad - looks similar to Enumeration access
+  # good
   l = ->(v) { puts v }
   l[1]
 
