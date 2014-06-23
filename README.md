@@ -1104,7 +1104,7 @@ Translations of the guide are available in the following languages:
   *safe assignment in condition*.
 
   ```Ruby
-  # bad (+ a warning)
+  # okish (+ a warning)
   if v = array.grep(/foo/)
     do_something(v)
     ...
