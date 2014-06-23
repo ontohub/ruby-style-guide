@@ -495,8 +495,7 @@ Translations of the guide are available in the following languages:
       to: 'bob@example.com',
       from: 'us@example.com',
       subject: 'Important message',
-      body: source.text
-    )
+      body: source.text)
   end
   ```
 
