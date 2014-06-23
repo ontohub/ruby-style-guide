@@ -185,6 +185,11 @@ Translations of the guide are available in the following languages:
   def no_op; end
   ```
 
+* If we want to call a method and expect a return value use the `()` for
+  parameters
+
+  Tim gives an example later
+
 * Use spaces around operators, after commas, colons and semicolons, around `{`
   and before `}`. Whitespace might be (mostly) irrelevant to the Ruby
   interpreter, but its proper use is the key to writing easily
