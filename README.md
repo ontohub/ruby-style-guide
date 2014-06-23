@@ -531,7 +531,7 @@ Translations of the guide are available in the following languages:
   num = 1_000_000
   ```
 
-* Use RDoc and its conventions for API documentation.  Don't put an
+* Use Yard and its conventions for API documentation.  Don't put an
   empty line between the comment block and the `def`.
 
 * Limit lines to 80 characters.
