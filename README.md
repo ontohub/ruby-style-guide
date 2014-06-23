@@ -1256,7 +1256,7 @@ Translations of the guide are available in the following languages:
 * Always run the Ruby interpreter with the `-w` option so it will warn
   you if you forget either of the rules above!
 
-* Use the new lambda literal syntax for single line body blocks. Use the
+* Use the new lambda literal syntax for lambdas. Use the
   `lambda` method for multi-line blocks.
 
   ```Ruby
