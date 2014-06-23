@@ -1135,6 +1135,24 @@ Translations of the guide are available in the following languages:
   enabled = true if enabled.nil?
   ```
 
+
+* `||=` is okay for multiline if but not for multiline begin
+
+  ```Ruby
+  #bad
+  @variable ||= begin
+    multiline stuff
+
+    end
+
+  #okay
+  @variable ||= if condition
+      multiline
+    else
+      multiline
+    end
+  ```
+
 * Use `&&=` to preprocess variables that may or may not exist. Using
   `&&=` will change the value only if it exists, removing the need to
   check its existence with `if`.
