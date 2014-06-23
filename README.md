@@ -410,12 +410,12 @@ Translations of the guide are available in the following languages:
 * Use spaces around the `=` operator when assigning default values to method parameters:
 
   ```Ruby
-  # bad
+  # good
   def some_method(arg1=:default, arg2=nil, arg3=[])
     # do something...
   end
 
-  # good
+  # okish
   def some_method(arg1 = :default, arg2 = nil, arg3 = [])
     # do something...
   end
