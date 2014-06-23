@@ -436,8 +436,10 @@ Translations of the guide are available in the following languages:
   result = 1 \
            - 2
 
-  long_string = 'First part of the long string' \
-                ' and second part of the long string'
+  long_string = <<-STR
+                  First part of the long string
+                  and second part of the long string
+                STR
   ```
 
 * Adopt a consistent multi-line method chaining style.
