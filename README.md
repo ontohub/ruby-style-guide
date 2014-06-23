@@ -232,8 +232,12 @@ Translations of the guide are available in the following languages:
   # good - no spaces
   "string#{expr}"
 
-  # ok - arguably more readable
+  # bad - although more readable
   "string#{ expr }"
+
+  #good
+  complex = expr
+  "string#{complex}"
   ```
 
   The first style is extremely more popular and you're generally
@@ -308,7 +312,7 @@ Translations of the guide are available in the following languages:
     calc_something_else
   end
 
-  # good - it's apparent what's going on
+  # bad - it's apparent what's going on
   kind = case year
          when 1850..1889 then 'Blues'
          when 1890..1909 then 'Ragtime'
@@ -324,7 +328,7 @@ Translations of the guide are available in the following languages:
              calc_something_else
            end
 
-  # good (and a bit more width efficient)
+  # okish (and a bit more width efficient)
   kind =
     case year
     when 1850..1889 then 'Blues'
@@ -341,6 +345,23 @@ Translations of the guide are available in the following languages:
     else
       calc_something_else
     end
+
+  # good (ontohub default)
+
+  kind = case year
+   when 1850..1889 then 'Blues'
+   when 1890..1909 then 'Ragtime'
+   when 1910..1929 then 'New Orleans Jazz'
+   when 1930..1939 then 'Swing'
+   when 1940..1950 then 'Bebop'
+  else 'Jazz'
+  end
+
+  result = if some_cond
+      calc_something
+  else
+      calc_something_else
+  end
   ```
 
 * Use empty lines between method definitions and also to break up a method
