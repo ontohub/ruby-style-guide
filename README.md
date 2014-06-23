@@ -395,6 +395,11 @@ Translations of the guide are available in the following languages:
                color,
              )
 
+  # good
+  some_method(size,
+              count,
+              color)
+
   # bad
   some_method(size, count, color, )
 
