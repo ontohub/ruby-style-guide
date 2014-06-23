@@ -178,12 +178,6 @@ Translations of the guide are available in the following languages:
   end
   ```
 
-  One exception to the rule are empty-body methods.
-
-  ```Ruby
-  # good
-  def no_op; end
-  ```
 
 * If we want to call a method and expect a return value use the `()` for
   parameters
