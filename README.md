@@ -994,7 +994,7 @@ Translations of the guide are available in the following languages:
   # good
   names.each { |name| puts name }
 
-  # bad
+  # okish
   names.select do |name|
     name.start_with?('S')
   end.map { |name| name.upcase }
