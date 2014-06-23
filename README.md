@@ -506,16 +506,19 @@ Translations of the guide are available in the following languages:
   menu_item = ['Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam',
     'Baked beans', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam']
 
-  # good
-  menu_item = [
-    'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam',
-    'Baked beans', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam'
-  ]
-
-  # good
+  # bad
   menu_item =
     ['Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam',
      'Baked beans', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam']
+
+
+  # good (comma on the last element and linebreak for ending bracket)
+  menu_item = [
+    'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam',
+    'Baked beans', 'Spam', 'Spam', 'Spam', 'Spam', 'Spam',
+  ]
+
+
   ```
 
 * Add underscores to large numeric literals to improve their readability.
