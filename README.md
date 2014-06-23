@@ -213,10 +213,10 @@ Translations of the guide are available in the following languages:
   strings. For hash literals two styles are considered acceptable.
 
   ```Ruby
-  # good - space after { and before }
+  # bad - space after { and before }
   { one: 1, two: 2 }
 
-  # good - no space after { and before }
+  # good the one and only - no space after { and before }
   {one: 1, two: 2}
   ```
 
