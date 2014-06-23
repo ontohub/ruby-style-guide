@@ -696,7 +696,7 @@ Translations of the guide are available in the following languages:
 * Leverage the fact that `if` and `case` are expressions which return a result.
 
   ```Ruby
-  # bad
+  # good
   if condition
     result = x
   else
