@@ -2761,38 +2761,11 @@ Translations of the guide are available in the following languages:
 * Avoid needless metaprogramming.
 
 * Do not mess around in core classes when writing libraries.
-  (Do not monkey-patch them.)
+  (Do not monkey-patch them.) Unless you know what you are doing.
 
 * The block form of `class_eval` is preferable to the string-interpolated form.
-  - when you use the string-interpolated form, always supply `__FILE__` and `__LINE__`,
-    so that your backtraces make sense:
-
-  ```ruby
-  class_eval 'def use_relative_model_naming?; true; end', __FILE__, __LINE__
-  ```
-
+  - Never use the  the string-interpolated form
   - `define_method` is preferable to `class_eval{ def ... }`
-
-* When using `class_eval` (or other `eval`) with string interpolation, add a comment block
-  showing its appearance if interpolated (a practice used in Rails code):
-
-  ```ruby
-  # from activesupport/lib/active_support/core_ext/string/output_safety.rb
-  UNSAFE_STRING_METHODS.each do |unsafe_method|
-    if 'String'.respond_to?(unsafe_method)
-      class_eval <<-EOT, __FILE__, __LINE__ + 1
-        def #{unsafe_method}(*args, &block)       # def capitalize(*args, &block)
-          to_str.#{unsafe_method}(*args, &block)  #   to_str.capitalize(*args, &block)
-        end                                       # end
-
-        def #{unsafe_method}!(*args)              # def capitalize!(*args)
-          @dirty = true                           #   @dirty = true
-          super                                   #   super
-        end                                       # end
-      EOT
-    end
-  end
-  ```
 
 * Avoid using `method_missing` for metaprogramming because backtraces become messy,
   the behavior is not listed in `#methods`, and misspelled method calls might silently
