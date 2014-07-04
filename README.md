@@ -2344,18 +2344,21 @@ Translations of the guide are available in the following languages:
   STATES = %i(draft open closed)
   ```
 
-* Avoid comma after the last item of an `Array` or `Hash` literal, especially
-  when the items are not on separate lines.
+* Avoid comma after the last item of an `Array` or `Hash` literal if
+  the items are not on separate lines.
 
   ```Ruby
-  # bad - easier to move/add/remove items, but still not preferred
+  # we like that
   VALUES = [
              1001,
              2020,
              3333,
+             4444,
+             5555,
+             6666,
            ]
 
-  # bad
+  # very bad
   VALUES = [1001, 2020, 3333, ]
 
   # good
