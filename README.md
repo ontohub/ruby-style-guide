@@ -2401,18 +2401,6 @@ Translations of the guide are available in the following languages:
   hash = { one: 1, two: 2, three: 3 }
   ```
 
-* Don't mix the Ruby 1.9 hash syntax with hash rockets in the same
-  hash literal. When you've got keys that are not symbols stick to the
-  hash rockets syntax.
-
-  ```Ruby
-  # bad
-  { a: 1, 'b' => 2 }
-
-  # good
-  { :a => 1, 'b' => 2 }
-  ```
-
 * Use `Hash#key?` instead of `Hash#has_key?` and `Hash#value?` instead
   of `Hash#has_value?`. As noted
   [here](http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/43765)
