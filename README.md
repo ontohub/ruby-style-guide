@@ -1965,24 +1965,7 @@ Translations of the guide are available in the following languages:
   attr_reader :one, :two, :three
   ```
 
-* Consider using `Struct.new`, which defines the trivial accessors,
-  constructor and comparison operators for you.
-
-  ```Ruby
-  # good
-  class Person
-    attr_accessor :first_name, :last_name
-
-    def initialize(first_name, last_name)
-      @first_name = first_name
-      @last_name = last_name
-    end
-  end
-
-  # better
-  Person = Struct.new(:first_name, :last_name) do
-  end
-  ````
+* Avoid the use of Struct in ontohub
 
 * Don't extend a `Struct.new` - it already is a new class. Extending it introduces
   a superfluous class level and may also introduce weird errors if the file is
