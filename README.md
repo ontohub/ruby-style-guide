@@ -1571,7 +1571,7 @@ Translations of the guide are available in the following languages:
 * The names of predicate methods (methods that return a boolean value)
   should end in a question mark.
   (i.e. `Array#empty?`). Methods that don't return a boolean, shouldn't
-  end in a question mark.
+  end in a question mark. We call them questions.
 
 * The names of potentially *dangerous* methods (i.e. methods that
   modify `self` or the arguments, `exit!` (doesn't run the finalizers
