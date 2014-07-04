@@ -1838,6 +1838,8 @@ Translations of the guide are available in the following languages:
   end
   ```
 
+* Prefer modules to classes which contain classes, since this is usually not necessary.
+
 * Prefer modules to classes with only class methods. Classes should be
   used only when it makes sense to create instances out of them.
 
