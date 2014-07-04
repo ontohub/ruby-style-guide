@@ -2102,39 +2102,22 @@ Translations of the guide are available in the following languages:
 
 ## Exceptions
 
-* Signal exceptions using the `fail` method. Use `raise` only when
-  catching an exception and re-raising it (because here you're not
-  failing, but explicitly and purposefully raising an exception).
+* Prefer `raise` over `fail`.
 
-  ```Ruby
-  begin
-    fail 'Oops'
-  rescue => error
-    raise if error.message != 'Oops'
-  end
-  ```
-
-* Don't specify `RuntimeError` explicitly in the two argument version of `fail/raise`.
-
-  ```Ruby
-  # bad
-  fail RuntimeError, 'message'
-
-  # good - signals a RuntimeError by default
-  fail 'message'
-  ```
+* Be aware that calling `raise` with a String as a lone argument
+  will actually raise a `RuntimeError`.
 
 * Prefer supplying an exception class and a message as two separate
-  arguments to `fail/raise`, instead of an exception instance.
+  arguments to `raise`, instead of an exception instance.
 
   ```Ruby
   # bad
-  fail SomeException.new('message')
-  # Note that there is no way to do `fail SomeException.new('message'), backtrace`.
+  raise SomeException.new('message')
+  # Note that there is no way to do `raise SomeException.new('message'), backtrace`.
 
   # good
-  fail SomeException, 'message'
-  # Consistent with `fail SomeException, 'message', backtrace`.
+  raise SomeException, 'message'
+  # Consistent with `raise SomeException, 'message', backtrace`.
   ```
 
 * Never return from an `ensure` block. If you explicitly return from a
@@ -2216,7 +2199,7 @@ Translations of the guide are available in the following languages:
   do_something rescue nil
   ```
 
-* Avoid using `rescue` in its modifier form.
+* Never use `rescue` in its modifier form.
 
   ```Ruby
   # bad - this catches exceptions of StandardError class and its descendant classes
@@ -2229,6 +2212,9 @@ Translations of the guide are available in the following languages:
     handle_error(ex)
   end
   ```
+
+* Explictly rescue from an error class whenever possible  
+  *Hint:* It is always possible
 
 * Don't use exceptions for flow of control.
 
