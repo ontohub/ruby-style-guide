@@ -2440,7 +2440,8 @@ Translations of the guide are available in the following languages:
   batman.fetch(:is_evil, true) # => false
   ```
 
-* Prefer the use of the block instead of the default value in `Hash#fetch`.
+* Be aware that default values passed through the block of `Hash#fetch` will be
+  lazy-evaluated. So you should prefer them for expensive calls.
 
   ```Ruby
   batman = { name: 'Bruce Wayne' }
