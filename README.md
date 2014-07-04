@@ -2478,7 +2478,7 @@ Translations of the guide are available in the following languages:
   # good
   email_with_name = "#{user.name} <#{user.email}>"
 
-  # good
+  # ok
   email_with_name = format('%s <%s>', user.name, user.email)
   ```
 
@@ -2504,21 +2504,6 @@ Translations of the guide are available in the following languages:
     # good
     name = 'Bozhidar'
     ```
-
-  * **(Option B)** Prefer double-quotes unless your string literal
-    contains `"` or escape characters you want to suppress.
-
-    ```Ruby
-    # bad
-    name = 'Bozhidar'
-
-    # good
-    name = "Bozhidar"
-    ```
-
-  The second style is arguably a bit more popular in the Ruby
-  community. The string literals in this guide, however, are
-  aligned with the first style.
 
 * Don't use the character literal syntax `?x`. Since Ruby 1.9 it's
   basically redundant - `?x` would interpreted as `'x'` (a string with
@@ -2682,7 +2667,11 @@ Translations of the guide are available in the following languages:
 
 * For complex replacements `sub`/`gsub` can be used with block or hash.
 
-## Percent Literals
+## Fancy Strings
+
+* Use `%r{}` for complex/longer regular expressions.
+
+* Use `%x[]` for system calls.
 
 * Use `%()`(it's a shorthand for `%Q`) for single-line strings which require both
   interpolation and embedded double-quotes. For multi-line strings, prefer heredocs.
@@ -2721,18 +2710,19 @@ Translations of the guide are available in the following languages:
   question = '"What did you say?"'
   ```
 
-* Use `%r` only for regular expressions matching *more than* one '/' character.
+* Use `%r` for regular expressions matching one or more '/' character
+  or for complex/multiline regular expressions.
 
   ```Ruby
   # bad
-  %r(\s+)
+  %r{\s+}
 
   # still bad
-  %r(^/(.*)$)
+  %r{^/(.*)$}
   # should be /^\/(.*)$/
 
   # good
-  %r(^/blog/2011/(.*)$)
+  %r{^/blog/2011/(.*)$}
   ```
 
 * Avoid the use of `%x` unless you're going to invoke a command with backquotes in
@@ -2740,21 +2730,21 @@ Translations of the guide are available in the following languages:
 
   ```Ruby
   # bad
-  date = %x(date)
+  date = %x[date]
 
   # good
   date = `date`
-  echo = %x(echo `date`)
+  echo = %x[echo `date`]
   ```
 
 * Avoid the use of `%s`. It seems that the community has decided
   `:"some string"` is the preferred way to create a symbol with
   spaces in it.
 
-* Prefer `()` as delimiters for all `%` literals, except `%r`. Since
-  braces often appear inside regular expressions in many scenarios a
-  less common character like `{` might be a better choice for a
-  delimiter, depending on the regexp's content.
+* Prefer `()` as delimiters for all `%` literals, except `%r` and `%x`. Since
+  braces often appear inside regular expressions in many scenarios a less
+  common character like `{` might be a better choice for a delimiter, depending
+  on the regexp's content. (Which is only important if the inner braces are unbalanced)
 
   ```Ruby
   # bad
