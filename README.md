@@ -2801,10 +2801,6 @@ Translations of the guide are available in the following languages:
 
 ## Misc
 
-* Write `ruby -w` safe code.
-
-* Avoid hashes as optional parameters. Does the method do too much? (Object initializers are exceptions for this rule).
-
 * Avoid methods longer than 10 LOC (lines of code). Ideally, most methods will be shorter than
   5 LOC. Empty lines do not contribute to the relevant LOC.
 
@@ -2840,29 +2836,11 @@ Translations of the guide are available in the following languages:
 
 * Do not mutate arguments unless that is the purpose of the method.
 
-* Avoid more than three levels of block nesting.
+* Avoid more than two levels of block nesting.
 
 * Be consistent. In an ideal world, be consistent with these guidelines.
 
-* Use common sense.
-
-## Tools
-
-Here's some tools to help you automatically check Ruby code against
-this guide.
-
-### RuboCop
-
-[RuboCop](https://github.com/bbatsov/rubocop) is a Ruby code style
-checker based on this style guide. RuboCop already covers a
-significant portion of the Guide, supports both MRI 1.9 and MRI 2.0
-and has good Emacs integration.
-
-### RubyMine
-
-[RubyMine](http://www.jetbrains.com/ruby/)'s code inspections are
-[partially based](http://confluence.jetbrains.com/display/RUBYDEV/RubyMine+Inspections)
-on this guide.
+* **Use common sense**.
 
 # Contributing
 
@@ -2883,13 +2861,4 @@ It's easy, just follow the [contribution guidelines](https://github.com/bbatsov/
 ![Creative Commons License](http://i.creativecommons.org/l/by/3.0/88x31.png)
 This work is licensed under a [Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/deed.en_US)
 
-# Spread the Word
-
-A community-driven style guide is of little use to a community that
-doesn't know about its existence. Tweet about the guide, share it with
-your friends and colleagues. Every comment, suggestion or opinion we
-get makes the guide just a little bit better. And we want to have the
-best possible guide, don't we?
-
-Cheers,<br/>
-[Bozhidar](https://twitter.com/bbatsov)
+This guide is based on the original version of [Bozhidar](https://twitter.com/bbatsov).
