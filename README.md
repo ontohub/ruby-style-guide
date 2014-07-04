@@ -2465,8 +2465,6 @@ Translations of the guide are available in the following languages:
   email, username = data.values_at('email', 'nickname')
   ```
 
-* Rely on the fact that as of Ruby 1.9 hashes are ordered.
-
 * Never modify a collection while traversing it.
 
 ## Strings
