@@ -1575,19 +1575,14 @@ Translations of the guide are available in the following languages:
 
 * The names of potentially *dangerous* methods (i.e. methods that
   modify `self` or the arguments, `exit!` (doesn't run the finalizers
-  like `exit` does), etc.) should end with an exclamation mark if
-  there exists a safe version of that *dangerous* method.
+  like `exit` does), etc.) should end with an exclamation mark.
+  Also methods which raise errors themselves should contain an
+  exclamation-mark.
 
   ```Ruby
-  # bad - there is no matching 'safe' method
-  class Person
-    def update!
-    end
-  end
-
   # good
   class Person
-    def update
+    def update!
     end
   end
 
