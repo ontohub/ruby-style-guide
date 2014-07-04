@@ -1765,7 +1765,7 @@ Translations of the guide are available in the following languages:
     include AnotherModule
 
     # inner classes
-    CustomErrorKlass = Class.new(StandardError)
+    class CustomErrorKlass < StandardError; end
 
     # constants are next
     SOME_CONSTANT = 20
