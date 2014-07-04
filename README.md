@@ -2100,6 +2100,8 @@ Translations of the guide are available in the following languages:
   end
   ```
 
+* Prefer `self.method_name` over the `class << self` construct
+
 ## Exceptions
 
 * Prefer `raise` over `fail`.
