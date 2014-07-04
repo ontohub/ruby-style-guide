@@ -1798,7 +1798,7 @@ Translations of the guide are available in the following languages:
   ```
 
 * Don't nest multi line classes within classes. Try to have such nested
-  classes each in their own file in a folder named like the containing class.
+  classes each in their own file in a directory named like the containing class.
 
   ```Ruby
   # bad
