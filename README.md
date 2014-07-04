@@ -188,7 +188,9 @@ Translations of the guide are available in the following languages:
 * If we want to call a method and expect a return value use the `()` for
   parameters
 
-  Tim gives an example later
+  ```Ruby
+  object.perform(Time.now, within: 5.minutes)
+  ```
 
 * Use spaces around operators, after commas, colons and semicolons, around `{`
   and before `}`. Whitespace might be (mostly) irrelevant to the Ruby
