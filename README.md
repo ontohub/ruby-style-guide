@@ -1571,23 +1571,18 @@ Translations of the guide are available in the following languages:
 * The names of predicate methods (methods that return a boolean value)
   should end in a question mark.
   (i.e. `Array#empty?`). Methods that don't return a boolean, shouldn't
-  end in a question mark.
+  end in a question mark. We call them questions.
 
 * The names of potentially *dangerous* methods (i.e. methods that
   modify `self` or the arguments, `exit!` (doesn't run the finalizers
-  like `exit` does), etc.) should end with an exclamation mark if
-  there exists a safe version of that *dangerous* method.
+  like `exit` does), etc.) should end with an exclamation mark.
+  Also methods which raise errors themselves should contain an
+  exclamation-mark.
 
   ```Ruby
-  # bad - there is no matching 'safe' method
-  class Person
-    def update!
-    end
-  end
-
   # good
   class Person
-    def update
+    def update!
     end
   end
 
@@ -1770,7 +1765,7 @@ Translations of the guide are available in the following languages:
     include AnotherModule
 
     # inner classes
-    CustomErrorKlass = Class.new(StandardError)
+    class CustomErrorKlass < StandardError; end
 
     # constants are next
     SOME_CONSTANT = 20
@@ -1803,7 +1798,7 @@ Translations of the guide are available in the following languages:
   ```
 
 * Don't nest multi line classes within classes. Try to have such nested
-  classes each in their own file in a folder named like the containing class.
+  classes each in their own file in a directory named like the containing class.
 
   ```Ruby
   # bad
@@ -1842,6 +1837,8 @@ Translations of the guide are available in the following languages:
     end
   end
   ```
+
+* Prefer modules to classes which contain classes, since this is usually not necessary.
 
 * Prefer modules to classes with only class methods. Classes should be
   used only when it makes sense to create instances out of them.
@@ -1968,24 +1965,7 @@ Translations of the guide are available in the following languages:
   attr_reader :one, :two, :three
   ```
 
-* Consider using `Struct.new`, which defines the trivial accessors,
-  constructor and comparison operators for you.
-
-  ```Ruby
-  # good
-  class Person
-    attr_accessor :first_name, :last_name
-
-    def initialize(first_name, last_name)
-      @first_name = first_name
-      @last_name = last_name
-    end
-  end
-
-  # better
-  Person = Struct.new(:first_name, :last_name) do
-  end
-  ````
+* Avoid the use of Struct in ontohub
 
 * Don't extend a `Struct.new` - it already is a new class. Extending it introduces
   a superfluous class level and may also introduce weird errors if the file is
@@ -2120,41 +2100,26 @@ Translations of the guide are available in the following languages:
   end
   ```
 
+* Prefer `self.method_name` over the `class << self` construct
+
 ## Exceptions
 
-* Signal exceptions using the `fail` method. Use `raise` only when
-  catching an exception and re-raising it (because here you're not
-  failing, but explicitly and purposefully raising an exception).
+* Prefer `raise` over `fail`.
 
-  ```Ruby
-  begin
-    fail 'Oops'
-  rescue => error
-    raise if error.message != 'Oops'
-  end
-  ```
-
-* Don't specify `RuntimeError` explicitly in the two argument version of `fail/raise`.
-
-  ```Ruby
-  # bad
-  fail RuntimeError, 'message'
-
-  # good - signals a RuntimeError by default
-  fail 'message'
-  ```
+* Be aware that calling `raise` with a String as a lone argument
+  will actually raise a `RuntimeError`.
 
 * Prefer supplying an exception class and a message as two separate
-  arguments to `fail/raise`, instead of an exception instance.
+  arguments to `raise`, instead of an exception instance.
 
   ```Ruby
   # bad
-  fail SomeException.new('message')
-  # Note that there is no way to do `fail SomeException.new('message'), backtrace`.
+  raise SomeException.new('message')
+  # Note that there is no way to do `raise SomeException.new('message'), backtrace`.
 
   # good
-  fail SomeException, 'message'
-  # Consistent with `fail SomeException, 'message', backtrace`.
+  raise SomeException, 'message'
+  # Consistent with `raise SomeException, 'message', backtrace`.
   ```
 
 * Never return from an `ensure` block. If you explicitly return from a
@@ -2236,7 +2201,7 @@ Translations of the guide are available in the following languages:
   do_something rescue nil
   ```
 
-* Avoid using `rescue` in its modifier form.
+* Never use `rescue` in its modifier form.
 
   ```Ruby
   # bad - this catches exceptions of StandardError class and its descendant classes
@@ -2249,6 +2214,9 @@ Translations of the guide are available in the following languages:
     handle_error(ex)
   end
   ```
+
+* Explictly rescue from an error class whenever possible  
+  *Hint:* It is always possible
 
 * Don't use exceptions for flow of control.
 
@@ -2376,18 +2344,21 @@ Translations of the guide are available in the following languages:
   STATES = %i(draft open closed)
   ```
 
-* Avoid comma after the last item of an `Array` or `Hash` literal, especially
-  when the items are not on separate lines.
+* Avoid comma after the last item of an `Array` or `Hash` literal if
+  the items are not on separate lines.
 
   ```Ruby
-  # bad - easier to move/add/remove items, but still not preferred
+  # we like that
   VALUES = [
              1001,
              2020,
              3333,
+             4444,
+             5555,
+             6666,
            ]
 
-  # bad
+  # very bad
   VALUES = [1001, 2020, 3333, ]
 
   # good
@@ -2430,18 +2401,6 @@ Translations of the guide are available in the following languages:
   hash = { one: 1, two: 2, three: 3 }
   ```
 
-* Don't mix the Ruby 1.9 hash syntax with hash rockets in the same
-  hash literal. When you've got keys that are not symbols stick to the
-  hash rockets syntax.
-
-  ```Ruby
-  # bad
-  { a: 1, 'b' => 2 }
-
-  # good
-  { :a => 1, 'b' => 2 }
-  ```
-
 * Use `Hash#key?` instead of `Hash#has_key?` and `Hash#value?` instead
   of `Hash#has_value?`. As noted
   [here](http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/43765)
@@ -2481,7 +2440,8 @@ Translations of the guide are available in the following languages:
   batman.fetch(:is_evil, true) # => false
   ```
 
-* Prefer the use of the block instead of the default value in `Hash#fetch`.
+* Be aware that default values passed through the block of `Hash#fetch` will be
+  lazy-evaluated. So you should prefer them for expensive calls.
 
   ```Ruby
   batman = { name: 'Bruce Wayne' }
@@ -2505,8 +2465,6 @@ Translations of the guide are available in the following languages:
   email, username = data.values_at('email', 'nickname')
   ```
 
-* Rely on the fact that as of Ruby 1.9 hashes are ordered.
-
 * Never modify a collection while traversing it.
 
 ## Strings
@@ -2520,7 +2478,7 @@ Translations of the guide are available in the following languages:
   # good
   email_with_name = "#{user.name} <#{user.email}>"
 
-  # good
+  # ok
   email_with_name = format('%s <%s>', user.name, user.email)
   ```
 
@@ -2546,21 +2504,6 @@ Translations of the guide are available in the following languages:
     # good
     name = 'Bozhidar'
     ```
-
-  * **(Option B)** Prefer double-quotes unless your string literal
-    contains `"` or escape characters you want to suppress.
-
-    ```Ruby
-    # bad
-    name = 'Bozhidar'
-
-    # good
-    name = "Bozhidar"
-    ```
-
-  The second style is arguably a bit more popular in the Ruby
-  community. The string literals in this guide, however, are
-  aligned with the first style.
 
 * Don't use the character literal syntax `?x`. Since Ruby 1.9 it's
   basically redundant - `?x` would interpreted as `'x'` (a string with
@@ -2724,7 +2667,11 @@ Translations of the guide are available in the following languages:
 
 * For complex replacements `sub`/`gsub` can be used with block or hash.
 
-## Percent Literals
+## Fancy Strings
+
+* Use `%r{}` for complex/longer regular expressions.
+
+* Use `%x[]` for system calls.
 
 * Use `%()`(it's a shorthand for `%Q`) for single-line strings which require both
   interpolation and embedded double-quotes. For multi-line strings, prefer heredocs.
@@ -2763,18 +2710,19 @@ Translations of the guide are available in the following languages:
   question = '"What did you say?"'
   ```
 
-* Use `%r` only for regular expressions matching *more than* one '/' character.
+* Use `%r` for regular expressions matching one or more '/' character
+  or for complex/multiline regular expressions.
 
   ```Ruby
   # bad
-  %r(\s+)
+  %r{\s+}
 
   # still bad
-  %r(^/(.*)$)
+  %r{^/(.*)$}
   # should be /^\/(.*)$/
 
   # good
-  %r(^/blog/2011/(.*)$)
+  %r{^/blog/2011/(.*)$}
   ```
 
 * Avoid the use of `%x` unless you're going to invoke a command with backquotes in
@@ -2782,21 +2730,21 @@ Translations of the guide are available in the following languages:
 
   ```Ruby
   # bad
-  date = %x(date)
+  date = %x[date]
 
   # good
   date = `date`
-  echo = %x(echo `date`)
+  echo = %x[echo `date`]
   ```
 
 * Avoid the use of `%s`. It seems that the community has decided
   `:"some string"` is the preferred way to create a symbol with
   spaces in it.
 
-* Prefer `()` as delimiters for all `%` literals, except `%r`. Since
-  braces often appear inside regular expressions in many scenarios a
-  less common character like `{` might be a better choice for a
-  delimiter, depending on the regexp's content.
+* Prefer `()` as delimiters for all `%` literals, except `%r` and `%x`. Since
+  braces often appear inside regular expressions in many scenarios a less
+  common character like `{` might be a better choice for a delimiter, depending
+  on the regexp's content. (Which is only important if the inner braces are unbalanced)
 
   ```Ruby
   # bad
@@ -2813,38 +2761,11 @@ Translations of the guide are available in the following languages:
 * Avoid needless metaprogramming.
 
 * Do not mess around in core classes when writing libraries.
-  (Do not monkey-patch them.)
+  (Do not monkey-patch them.) Unless you know what you are doing.
 
 * The block form of `class_eval` is preferable to the string-interpolated form.
-  - when you use the string-interpolated form, always supply `__FILE__` and `__LINE__`,
-    so that your backtraces make sense:
-
-  ```ruby
-  class_eval 'def use_relative_model_naming?; true; end', __FILE__, __LINE__
-  ```
-
+  - Never use the  the string-interpolated form
   - `define_method` is preferable to `class_eval{ def ... }`
-
-* When using `class_eval` (or other `eval`) with string interpolation, add a comment block
-  showing its appearance if interpolated (a practice used in Rails code):
-
-  ```ruby
-  # from activesupport/lib/active_support/core_ext/string/output_safety.rb
-  UNSAFE_STRING_METHODS.each do |unsafe_method|
-    if 'String'.respond_to?(unsafe_method)
-      class_eval <<-EOT, __FILE__, __LINE__ + 1
-        def #{unsafe_method}(*args, &block)       # def capitalize(*args, &block)
-          to_str.#{unsafe_method}(*args, &block)  #   to_str.capitalize(*args, &block)
-        end                                       # end
-
-        def #{unsafe_method}!(*args)              # def capitalize!(*args)
-          @dirty = true                           #   @dirty = true
-          super                                   #   super
-        end                                       # end
-      EOT
-    end
-  end
-  ```
 
 * Avoid using `method_missing` for metaprogramming because backtraces become messy,
   the behavior is not listed in `#methods`, and misspelled method calls might silently
@@ -2879,10 +2800,6 @@ Translations of the guide are available in the following languages:
     ```
 
 ## Misc
-
-* Write `ruby -w` safe code.
-
-* Avoid hashes as optional parameters. Does the method do too much? (Object initializers are exceptions for this rule).
 
 * Avoid methods longer than 10 LOC (lines of code). Ideally, most methods will be shorter than
   5 LOC. Empty lines do not contribute to the relevant LOC.
@@ -2919,29 +2836,11 @@ Translations of the guide are available in the following languages:
 
 * Do not mutate arguments unless that is the purpose of the method.
 
-* Avoid more than three levels of block nesting.
+* Avoid more than two levels of block nesting.
 
 * Be consistent. In an ideal world, be consistent with these guidelines.
 
-* Use common sense.
-
-## Tools
-
-Here's some tools to help you automatically check Ruby code against
-this guide.
-
-### RuboCop
-
-[RuboCop](https://github.com/bbatsov/rubocop) is a Ruby code style
-checker based on this style guide. RuboCop already covers a
-significant portion of the Guide, supports both MRI 1.9 and MRI 2.0
-and has good Emacs integration.
-
-### RubyMine
-
-[RubyMine](http://www.jetbrains.com/ruby/)'s code inspections are
-[partially based](http://confluence.jetbrains.com/display/RUBYDEV/RubyMine+Inspections)
-on this guide.
+* **Use common sense**.
 
 # Contributing
 
@@ -2962,13 +2861,4 @@ It's easy, just follow the [contribution guidelines](https://github.com/bbatsov/
 ![Creative Commons License](http://i.creativecommons.org/l/by/3.0/88x31.png)
 This work is licensed under a [Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/deed.en_US)
 
-# Spread the Word
-
-A community-driven style guide is of little use to a community that
-doesn't know about its existence. Tweet about the guide, share it with
-your friends and colleagues. Every comment, suggestion or opinion we
-get makes the guide just a little bit better. And we want to have the
-best possible guide, don't we?
-
-Cheers,<br/>
-[Bozhidar](https://twitter.com/bbatsov)
+This guide is based on the original version of [Bozhidar](https://twitter.com/bbatsov).
