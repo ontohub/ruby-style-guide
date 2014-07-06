@@ -2764,7 +2764,7 @@ Translations of the guide are available in the following languages:
   (Do not monkey-patch them.) Unless you know what you are doing.
 
 * The block form of `class_eval` is preferable to the string-interpolated form.
-  - Never use the  the string-interpolated form
+  - Never use the string-interpolated form
   - `define_method` is preferable to `class_eval{ def ... }`
 
 * Avoid using `method_missing` for metaprogramming because backtraces become messy,
