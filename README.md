@@ -339,12 +339,11 @@ Translations of the guide are available in the following languages:
     else 'Jazz'
     end
 
-  result =
-    if some_cond
+  result = if some_cond
       calc_something
-    else
+  else
       calc_something_else
-    end
+  end
 
   # good (ontohub default)
 
@@ -357,11 +356,12 @@ Translations of the guide are available in the following languages:
   else 'Jazz'
   end
 
-  result = if some_cond
+  result =
+    if some_cond
       calc_something
-  else
+    else
       calc_something_else
-  end
+    end
   ```
 
 * Use empty lines between method definitions and also to break up a method
