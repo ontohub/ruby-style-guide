@@ -75,6 +75,7 @@ Translations of the guide are available in the following languages:
 
 ## Table of Contents
 
+* [Running RuboCop](#running-rubocop)
 * [Source Code Layout](#source-code-layout)
 * [Syntax](#syntax)
 * [Naming](#naming)
@@ -89,6 +90,18 @@ Translations of the guide are available in the following languages:
 * [Metaprogramming](#metaprogramming)
 * [Misc](#misc)
 * [Tools](#tools)
+
+## Running RuboCop
+
+You can check your code for compliance with this style guide by running
+```
+script/stylecheck
+```
+in the ontohub directory. You can also specify a list of files and folders to go
+through with
+```
+script/stylecheck app/models/ontology.rb app/models/ontology/
+```
 
 ## Source Code Layout
 
